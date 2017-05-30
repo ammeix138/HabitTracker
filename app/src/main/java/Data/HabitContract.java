@@ -13,12 +13,12 @@ public final class HabitContract {
 
     public static final class HabitEntry implements BaseColumns {
 
-        /*
+        /**
          * This shows the actual table name "habits"
          */
         public final static String TABLE_NAME = "habits";
 
-        /*
+        /**
          * This displays the different names of the columns within the data table "habits".
          */
         public final static String _ID = BaseColumns._ID;
@@ -28,7 +28,7 @@ public final class HabitContract {
         public final static String COLUMN_STEP_COUNT = "step_count";
         public final static String COLUMN_DAILY_REFLECTION = "reflection";
 
-        /*
+        /**
          * Type of workout/exercise to be selected by the user
          * that would be displayed with a spinner menu.
          */

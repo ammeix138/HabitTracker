@@ -7,9 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import static Data.HabitContract.*;
 
 /**
- * Created by ammei on 5/18/2017.
+ * Database helper for HabitTracker app. Manages creation and version management.
  */
-
 public class HabitDbHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = HabitDbHelper.class.getSimpleName();
@@ -34,6 +33,11 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * This is called when the database is initially created.
+     *
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_HABITS_TABLE = "CREATE TABLE" + HabitEntry.TABLE_NAME + "("
@@ -47,6 +51,9 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_HABITS_TABLE);
     }
 
+    /**
+     * This is called when the database needs to be upgraded.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

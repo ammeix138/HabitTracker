@@ -15,7 +15,9 @@ public class CatalogActivity extends AppCompatActivity {
 
     TextView mEmptyViewDisplayText;
 
-    /*Database helper which will provide access to the "MyHabits" database*/
+    /**
+     * Database helper which will provide access to the "MyHabits" database.
+     */
     private HabitDbHelper mDbHelper;
 
     @Override
@@ -34,7 +36,7 @@ public class CatalogActivity extends AppCompatActivity {
      * of the habits database.
      */
     private void displayDatabaseInfo() {
-        //Create and or open a database to read from it.
+        // Create and or open a database to read from it.
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -46,7 +48,7 @@ public class CatalogActivity extends AppCompatActivity {
                 HabitEntry.COLUMN_DAILY_REFLECTION
         };
 
-        //Performs query on the habits table.
+        // Performs query on the habits table.
         Cursor cursor = db.query(
                 HabitEntry.TABLE_NAME,
                 projection,
@@ -60,8 +62,8 @@ public class CatalogActivity extends AppCompatActivity {
         TextView displayView = (TextView) findViewById(R.id.emptyView);
 
         try {
-            //Displays number of rows in the Cursor
 
+            // Displays number of rows in the Cursor
             displayView.setText("Number of rows currently in table: " + cursor.getCount() + " habits.\n\n");
             displayView.append(HabitEntry._ID + " - " +
                     HabitEntry.COLUMN_DATE +
@@ -95,7 +97,7 @@ public class CatalogActivity extends AppCompatActivity {
 
             }
         } finally {
-            // Close cursor on try block is executed.
+            // Close cursor when try block is executed.
             cursor.close();
         }
     }
