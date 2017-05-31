@@ -3,8 +3,9 @@ package Data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import static Data.HabitContract.*;
+import static Data.HabitContract.HabitEntry;
 
 /**
  * Database helper for HabitTracker app. Manages creation and version management.
@@ -40,15 +41,17 @@ public class HabitDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_HABITS_TABLE = "CREATE TABLE" + HabitEntry.TABLE_NAME + "("
-                + HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT"
-                + HabitEntry.COLUMN_DATE + " TEXT"
-                + HabitEntry.COLUMN_WO_TYPE + " INTEGER DEFAULT 0"
-                + HabitEntry.COLUMN_CAL_BURNED + " INTEGER NOT NULL"
-                + HabitEntry.COLUMN_STEP_COUNT + " INTEGER NOT NULL"
+        String SQL_CREATE_HABITS_TABLE = "CREATE TABLE " + HabitEntry.TABLE_NAME + " ("
+                + HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + HabitEntry.COLUMN_DATE + " TEXT, "
+                + HabitEntry.COLUMN_WO_TYPE + " INTEGER DEFAULT 0, "
+                + HabitEntry.COLUMN_CAL_BURNED + " INTEGER NOT NULL, "
+                + HabitEntry.COLUMN_STEP_COUNT + " INTEGER NOT NULL, "
                 + HabitEntry.COLUMN_DAILY_REFLECTION + " TEXT NOT NULL);";
 
         db.execSQL(SQL_CREATE_HABITS_TABLE);
+
+        Log.e(LOG_TAG, "Table creation successful");
     }
 
     /**

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import Data.HabitDbHelper;
@@ -12,6 +13,8 @@ import Data.HabitDbHelper;
 import static Data.HabitContract.HabitEntry;
 
 public class CatalogActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = HabitDbHelper.class.getSimpleName();
 
     TextView mEmptyViewDisplayText;
 
@@ -29,13 +32,20 @@ public class CatalogActivity extends AppCompatActivity {
         mEmptyViewDisplayText = (TextView) findViewById(R.id.emptyView);
         mEmptyViewDisplayText.setText(R.string.no_ui);
 
+        mDbHelper = new HabitDbHelper(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayDatabaseInfo();
     }
 
     /**
-     * Temporary helper method to display information in the onscreen TextView about the state
-     * of the habits database.
+     *
      */
-    private void displayDatabaseInfo() {
+    private Cursor readHabits() {
         // Create and or open a database to read from it.
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -89,7 +99,7 @@ public class CatalogActivity extends AppCompatActivity {
                 // Display the values from each column of the current
                 // row in the cursor in the TextView
                 displayView.append(("\n" + currentID + " - " +
-                        currentDate + " - " +
+                        currentDate + " - " + "\n" +
                         currentWorkout + " - " +
                         currentCalBurned + " - " +
                         currentSteps + " - " +
@@ -100,6 +110,16 @@ public class CatalogActivity extends AppCompatActivity {
             // Close cursor when try block is executed.
             cursor.close();
         }
+
+        return cursor;
+    }
+
+    /**
+     * Temporary helper method displays info within the onscreen TextView regarding current state
+     * of the database.
+     */
+    public void displayDatabaseInfo() {
+        Cursor cursor = readHabits();
     }
 
     private void insertHabit() {
@@ -116,5 +136,7 @@ public class CatalogActivity extends AppCompatActivity {
         values.put(HabitEntry.COLUMN_DAILY_REFLECTION, "This is my daily reflection...");
 
         long newRowId = db.insert(HabitEntry.TABLE_NAME, null, values);
+
+        Log.v(LOG_TAG, "New Rod Id: " + newRowId);
     }
 }
