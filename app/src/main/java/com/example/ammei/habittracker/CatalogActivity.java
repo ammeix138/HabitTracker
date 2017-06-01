@@ -107,11 +107,9 @@ public class CatalogActivity extends AppCompatActivity {
 
             }
         } finally {
-            // Close cursor when try block is executed.
-            cursor.close();
+            // Get Cursor
+            return cursor;
         }
-
-        return cursor;
     }
 
     /**
@@ -120,6 +118,7 @@ public class CatalogActivity extends AppCompatActivity {
      */
     public void displayDatabaseInfo() {
         Cursor cursor = readHabits();
+        cursor.close();
     }
 
     private void insertHabit() {
